@@ -7,14 +7,14 @@ if __name__ == "__main__":
     db = Database()
     # print(db)
 
-    # repo = MoodsRepository(db)
+    # repo = MoodRepository(db)
     # mood = Mood("Sa3at", "emotional", "ILY Elissa")
     # repo.add(mood)
     # print(mood)
     # mood.add_mood(db)
     # print(repo.all())
 
-    repo = UsersRepository(db)
+    repo = UserRepository(db)
     user = User("Adult")
     repo.add(user)
     # repo.info()
