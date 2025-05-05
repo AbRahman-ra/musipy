@@ -3,7 +3,7 @@ from models.user import User
 from models.mood import Mood
 from repos.user_repo import UserRepository
 from repos.mood_repo import MoodRepository
-import cli.commands
+import cli.routes
 
 if __name__ == "__main__":
 

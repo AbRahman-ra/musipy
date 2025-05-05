@@ -1,39 +1,38 @@
-from start.main import user_repo
-from start.main import mood_repo
+from start.main import user_repo, mood_repo
+from cli.main import args
 from models.user import User
+from middleware.main import auth_then
+import controllers.user_controller as uc
 
-def welcome_user()->None:
-    print("Welcome to MusiPy! My first small step towards a big dream ❤️")
-    print("Let's start out journey 🎶😍")
-    name = input("👤: Enter your name (Ctrl + C to exit): ")
-    if not len(name):
-        print("Oops! Name cannot be empty 😬")
-        return
-    user = User(name)
-    user_repo.add(user)
-    print(f"Welcome {name} 🥰! We wish you a great experience using MusiPy ❤️")
-    print("Start with `python --mood --add --key=song,feeling --value='Ya Layali','sensual'`")
+def handle_empty_command()->any:
+    return auth_then(uc.welcome_user)
 
-def show_moods(columns: str = None)->None:
-    moods = mood_repo.all(columns)
-    if not len(moods):
-        print("No moods yet, start adding your first mood now 😍")
-    else:
-        for mood in moods:
-            print(f"* {mood}")
+def handle_reset_command()->any:
+    return auth_then(uc.reset_app)
 
-def show_user_info()->None:
-    user = user_repo.info()
-    print(user)
+def handle_user_commands()->any:
+    if args.list:
+        return auth_then(uc.all)
+    elif args.add:
+        return uc.add_new_user(args.add)
+    elif args.update:
+        return auth_then(uc.update_user, args.update)
 
-def delete_everything()->None:
-    confirm = input("Are you sure? y / N")
-    if confirm == "y":
-        mood_repo.truncate()
-        user_repo.delete(user_repo.info(), True)
-        print("User and Moods deleted successfully")
-    else:
-        print("Data not deleted!")
+def handle_mood_commands()->any:
+    print(vars(args))
+    if args.list:
+        return auth_then(mc.all)
+    elif args.last:
+        pass
+    elif args.search:
+        pass
+    elif args.add:
+        pass
+    elif args.update:
+        pass
+    elif args.delete:
+        pass
+
 
 def handle_search_moods(key: str|None, value: str|None)->None:
     if (not key and not value) or (not len(key) and not len(value)):

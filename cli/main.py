@@ -1,26 +1,33 @@
 import argparse
 
 parser = argparse.ArgumentParser(
-    prog="Musipy",
-    description="A simple CLI logging application to track your mood and songs"
+    prog="musipy.py",
+    description="A simple CLI logging application to track your mood and songs",
+    epilog="run `python musipy user --help` or `python musipy mood --help` to show help menus for both user and mood"
 )
 
-# entities
-entities_group = parser.add_mutually_exclusive_group()
-entities_group.add_argument("-m", "--mood", action="store_true")
-entities_group.add_argument("-U", "--user", action="store_true")
-entities_group.add_argument("-R", "--reset", action="store_true", help="Delete all the data (moods and user)")
+entities_subparser = parser.add_subparsers(dest="entity")
 
-general_group = parser.add_mutually_exclusive_group()
-general_group.add_argument("-l", "--list", action='store_true', help="List all moods")
-general_group.add_argument("-S", "--search", help="search moods")
+# users rules
+user_parser = entities_subparser.add_parser("user")
+user_group = user_parser.add_mutually_exclusive_group()
+user_group.add_argument("-l", "--list", "-I", "--info", action="store_true", help="Get the user information (if user exists!)")
+user_group.add_argument("-A", "--add", metavar="<NAME>", help="Add a new user (if it doesn't exist)")
+user_group.add_argument("-U", "--update", metavar="<NEW_NAME>", help="Set a new name for the user (if user exists!)")
+# reset doesn't require "user" arg
+parser.add_argument("-R", "--reset", action="store_true", help="Delete Everything (user and recorded moods)")
 
-entities_multi_input_group = parser.add_argument_group()
-entities_multi_input_group.add_argument("-A", "--add", help="Add New [mood / user]")
-entities_multi_input_group.add_argument("-u", "--update", help="Update [mood / user]")
-entities_multi_input_group.add_argument("-K", "--key", help="Column identification (in add/search/update function [comma separated])")
-entities_multi_input_group.add_argument("-V", "--value", help="Column value (in add/search/update function [comma separated])")
-entities_multi_input_group.add_argument("-D", "--delete", action="store_true", help="Delete all moods")
-entities_multi_input_group.add_argument("-O", "--only", help="List specific columns [comma separated]")
+###
+
+# moods rules
+mood_parser = entities_subparser.add_parser("mood")
+mood_group = mood_parser.add_mutually_exclusive_group()
+mood_group.add_argument("-l", "--list", action="store_true", help="Display all moods")
+mood_group.add_argument("-L", "--last", action="store_true", help="Display last inserted mood")
+mood_group.add_argument("-A", "--add", metavar="<SONG_NAME>,<FEELING>,<DETAILS[OPTIONAL]>", help="Add a new mood")
+mood_group.add_argument("-S", "--search", metavar="id=<ID>,song=<SONG>,feeling=<FEELING>,details=<DETAILS>", help="all fields are optional, partial string search supported, if no field is provided it will return all the moods")
+mood_group.add_argument("-U", "--update", metavar="id=<ID>,song=<NEW_SONG>,feeling=<NEW_FEELING>,details=<NEW_DETAILS>", help="if ID doesn't exist, no updates will happen, all fields are optional, if no field is provided no update will happen")
+mood_group.add_argument("-D", "--delete", metavar="<ID1>,<ID2>,<ID3>,...", help="if ID doesn't exist, no deletion will happen, if 'all' or 'last' keyword is provided, all/last moods will be deleted accordingly")
+
 
 args = parser.parse_args()

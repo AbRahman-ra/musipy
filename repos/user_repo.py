@@ -3,6 +3,7 @@ from models.user import User
 
 class UserRepository:
     db = None
+    auth = False
     
     def __init__(self, db: Database):
         self.db = db
@@ -12,6 +13,7 @@ class UserRepository:
         params = (user.name, user.created_at, user.created_at)
         self.db.query(sql,params)
         user.id = self.db.query("SELECT last_insert_rowid()")[0][0]
+        self.auth = True
 
     def info(self)->User|None:
         result = self.db.query(f"SELECT * FROM {self.db.user_table_name};")
@@ -41,10 +43,6 @@ class UserRepository:
         params = (user.id,)
         self.db.query(sql, params)
         user.id = None
+        self.auth = False
         if reset_sequence:
-            self.reset_schema()
-    
-    def reset_schema()->None:
-        sql = f"DELETE FROM sqlite_sequence WHERE name = ?;"
-        params = (self.db.user_table_name,)
-        self.db.query(sql, params)
+            self.db.reset_schema()
