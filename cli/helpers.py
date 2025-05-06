@@ -3,6 +3,7 @@ from cli.main import args
 from models.user import User
 from middleware.main import auth_then
 import controllers.user_controller as uc
+import controllers.mood_controller as mc
 
 def handle_empty_command()->any:
     return auth_then(uc.welcome_user)
@@ -19,11 +20,10 @@ def handle_user_commands()->any:
         return auth_then(uc.update_user, args.update)
 
 def handle_mood_commands()->any:
-    print(vars(args))
     if args.list:
         return auth_then(mc.all)
     elif args.last:
-        pass
+        return auth_then(mc.last)
     elif args.search:
         pass
     elif args.add:
@@ -32,6 +32,8 @@ def handle_mood_commands()->any:
         pass
     elif args.delete:
         pass
+    else:
+        return auth_then(mc.invalid_cmd)
 
 
 def handle_search_moods(key: str|None, value: str|None)->None:

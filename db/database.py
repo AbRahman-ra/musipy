@@ -1,4 +1,4 @@
-import db.const as const
+from config.const import db_file_name, db_name
 import sqlite3 as sql
 
 """
@@ -12,7 +12,7 @@ class Database(object):
     user_table_name = 'user'
 
     def __init__(self):
-        self.db_name = const.get_db_file_name()
+        self.db_name = db_file_name
         self.create_db()
 
     def create_db(self)->None:

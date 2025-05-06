@@ -38,3 +38,9 @@ class MoodRepository:
 
     def truncate(self)->None:
         sql = f"DELETE FROM {self.db.moods_log_table_name};"
+        self.db.query(sql)
+
+    def last_mood(self)->Mood|None:
+        sql = f"SELECT * FROM {self.db.moods_log_table_name} ORDER BY created_at DESC LIMIT 1"
+        result = self.db.query(sql)
+        return result[0] if len(result) else None

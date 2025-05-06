@@ -1,4 +1,5 @@
 import argparse
+from config.const import app_name
 
 parser = argparse.ArgumentParser(
     prog="musipy.py",

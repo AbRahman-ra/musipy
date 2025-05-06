@@ -1,10 +1,7 @@
 from cli.main import parser, args
 from start.main import user_repo
-from repos.mood_repo import MoodRepository
 from cli.helpers import handle_empty_command, handle_reset_command, handle_user_commands, handle_mood_commands
-import controllers.user_controller as uc
 
-import middleware.main as mw
 
 # determine if no input is given
 non_empty_args = [val for val in vars(args).values() if val]

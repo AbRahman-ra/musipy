@@ -13,6 +13,7 @@ class UserRepository:
         params = (user.name, user.created_at, user.created_at)
         self.db.query(sql,params)
         user.id = self.db.query("SELECT last_insert_rowid()")[0][0]
+        print(user.id)
         self.auth = True
 
     def info(self)->User|None:
