@@ -19,9 +19,9 @@ def handle_user_commands()->any:
 
 def handle_mood_commands()->any:
     if args.list:
-        return auth_then(mc.all)
+        return auth_then(mc.all, fail=uc.invalid_cmd_no_auth)
     elif args.last:
-        return auth_then(mc.last)
+        return auth_then(mc.last, fail=uc.invalid_cmd_no_auth)
     elif args.search:
         pass
     elif args.add:
