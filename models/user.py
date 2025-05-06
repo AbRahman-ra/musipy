@@ -14,4 +14,4 @@ class User:
         return cls(id=row[0], name=row[1], created_at=row[2])
 
     def __str__(self)->str:
-        return f"User {'object' if not self.id else (f'record with id: {self.id}')} having name {self.name} (created at {self.created_at})"
+        return f"{'Authinticated user' if self.id else 'Non-authinticated user'} \"{self.name}\" {f'with id = {self.id} ' if self.id else ''}(created at {self.created_at})"

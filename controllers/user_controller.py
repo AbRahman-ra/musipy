@@ -12,16 +12,17 @@ def welcome_user()->None:
     show_post_signup_message(name)
 
 def reset_app()->None:
-    confirm = input("Are you sure? y / N")
-    if confirm not in "Yy":
+    confirm = input("Are you sure? y / N: ")
+    if confirm not in "Yy" or not len(confirm):
         print("Data not deleted!")
         return
     mood_repo.truncate()
     user_repo.delete(user_repo.info(), True)
     print("User and Moods deleted successfully")
 
-def all()->User:
-    return user_repo.info()
+def all()->None:
+    user = user_repo.info()
+    print(f"current user 😇: {user}")
 
 def add_new_user(name: str)->None:
     user = User(name)

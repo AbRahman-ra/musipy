@@ -82,7 +82,7 @@ class Database(object):
             );
         """
     
-    def reset_schema()->None:
+    def reset_schema(self)->None:
         sql = f"DELETE FROM sqlite_sequence WHERE name = ?;"
         params = (self.user_table_name,)
         self.query(sql, params)

@@ -1,0 +1,30 @@
+name: "Empty File DB on Main Push"
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  empty_db:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: Empty DB
+        run: 
+          echo '' > musipy.db
+
+      - name: Configure Git
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Commit and push
+        run: |
+          git add .
+          git commit -am "Empty DB done through pipeline"
+          git push
