@@ -31,3 +31,5 @@ jobs:
           git add .
           git commit -am "Empty DB done through pipeline"
           git push
+          git pull --rebase
+
