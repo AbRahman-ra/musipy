@@ -82,10 +82,19 @@ class Database(object):
             );
         """
     
-    def reset_schema(self)->None:
+    def reset_schema(self, schema: str)->None:
         sql = f"DELETE FROM sqlite_sequence WHERE name = ?;"
-        params = (self.user_table_name,)
+        params = (schema,)
         self.query(sql, params)
     
+    def get_db_column_type(self, table: str, column: str)->str:
+        result = self.query(f"PRAGMA table_info({table})")
+        target = None
+        for column_record in result:
+            if column in column_record:
+                target = column_record
+                break
+        return target[2] if len(target) else None
+
     def __str__(self)->str:
         return f"Database connection to: {self.db_name}, having {self.get_num_tables()} tables"

@@ -40,14 +40,3 @@ def update_user(new_name: str)->None:
 def show_post_signup_message(name: str):
     print(f"Welcome {name} 🥰! We wish you a great experience using MusiPy ❤️")
     print(f"Start with `python {app_file_name} mood -A \"SONG NAME, CURRENT FEELING, OPTIONAL DETAILS\"`")
-
-def invalid_cmd_no_auth()->None:
-    print("Invalid Command ⚠️")
-    print("You must add a user first!")
-    print(f"Run `python {app_file_name} user -A YOUR_NAME`")
-
-def invalid_cmd_user_exists()->None:
-    print("Oops! Cannot add a new user 😬")
-    print(f"user {user_repo.info().name} exists!")
-    print(f"Run `python {app_file_name} user -U new_name` to update the name of current user, OR")
-    print(f"Run `python {app_file_name} -R` to delete all the user's and moods' data")
