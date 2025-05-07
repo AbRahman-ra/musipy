@@ -1,7 +1,7 @@
 name: "Empty File DB on Main Push"
 
 on:
-  push:
+  pull_request:
     branches: [ main ]
 
 permissions:
@@ -20,16 +20,3 @@ jobs:
       - name: Empty DB
         run: 
           echo '' > musipy.db
-
-      - name: Configure Git
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-
-      - name: Commit and push
-        run: |
-          git add .
-          git commit -am "Empty DB done through pipeline"
-          git pull --rebase
-          git push
-
