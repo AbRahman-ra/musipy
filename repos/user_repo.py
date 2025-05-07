@@ -46,7 +46,7 @@ class UserRepository:
         user.id = None
         self.auth = False
         if reset_sequence:
-            self.db.reset_schema()
+            self.db.reset_schema(self.db.user_table_name)
 
     def __str__(self):
         return f"User Repo for {'auth' if self.auth else 'no_auth'} user having {'no ' if not self.db else ''}db connection"
