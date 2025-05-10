@@ -32,7 +32,6 @@ class MoodRepository:
         for cli_column, field in data.items():
             mood_property = self.cli_mood_mapper[cli_column]
             new_data[mood_property] = field
-        print(new_data)
         return Mood(new_data["song"], new_data["feeling"], new_data.get("description") if new_data.get("description") else "")
 
     def add(self, mood: Mood)->None:
@@ -59,7 +58,6 @@ class MoodRepository:
     def find_by_id(self, id: int|str)->Mood|None:
         sql = f"SELECT * FROM {self.db.moods_log_table_name} WHERE id = ?;"
         result = self.db.query(sql, (id,))
-        # return result[0]
         return Mood.from_record(result[0])
 
     def search(self, criteria: dict)->list[Mood]|None: 

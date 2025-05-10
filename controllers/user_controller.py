@@ -12,6 +12,7 @@ def welcome_user()->None:
     add_new_user(name)
 
 def reset_app()->None:
+    print("Your user data and all the recorded moods will be lost")
     confirm = input("Are you sure? y / N: ")
     if confirm not in "Yy" or not len(confirm):
         print("Data not deleted!")

@@ -43,6 +43,6 @@ def validate_new_mood(record: dict, next: Callable[[any], any], *args)->any:
 def check_mood_id_exists(record: dict, next: Callable[[any], any], *args)->any:
     if not record.get("id"):
         return invalid_cmd_id_not_provided()
-    if len(record.items() < 2):
+    if len(record.items()) < 2:
         return invalid_cmd_no_update_criteria_provided()
     return next(record, *args)
